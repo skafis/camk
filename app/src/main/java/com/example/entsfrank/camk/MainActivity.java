@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,5 +50,25 @@ public class MainActivity extends AppCompatActivity {
         //start image Capture Intent
         startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
     }
+//    Receiving activity result method will be called after closing the camera
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // if the result is capturing Image
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE){
+            if (requestCode == RESULT_OK){
+                // successfully captured the image
+                // display it in image view
+                previewCapturedImage();
+                }else if (resultCode == RESULT_CANCELED){
+                //user cancelled Image Capture
+                Toast.makeText(getApplicationContext(),"User cancelled image capture",Toast.LENGTH_SHORT).show();
+            } else {
+                //failed to capture image
+                Toast.makeText(getApplicationContext(),"Sorry failed to capture image", Toast.LENGTH_SHORT).show();
+            }
+        }
+//        super.onActivityResult(requestCode, resultCode, data);
     }
+}
 }
